@@ -22,13 +22,21 @@ const CategoryCarousel = () => {
     }
 
     return (
-        <div>
-            <Carousel className="w-full max-w-xl mx-auto my-20">
+        <section className="shell my-16">
+            <div className="glass-panel px-6 py-8 sm:px-8">
+                <div className="mb-6 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+                    <div>
+                        <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#8a5a13]">Focus Areas</p>
+                        <h2 className="text-3xl font-bold text-slate-900">Explore by hiring lane</h2>
+                    </div>
+                    <p className="max-w-xl text-sm leading-6 text-slate-600">Jump directly into the categories candidates are searching most right now.</p>
+                </div>
+            <Carousel className="mx-auto w-full max-w-5xl">
                 <CarouselContent>
                     {
                         category.map((cat, index) => (
                             <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
-                                <Button onClick={()=>searchJobHandler(cat)} variant="outline" className="rounded-full">{cat}</Button>
+                                <Button onClick={()=>searchJobHandler(cat)} variant="outline" className="h-auto w-full rounded-[22px] border-[#e2d5bf] bg-[#fffaf2] px-5 py-5 text-left text-base font-semibold text-slate-800 hover:bg-[#f7ecdd] hover:text-slate-900">{cat}</Button>
                             </CarouselItem>
                         ))
                     }
@@ -36,7 +44,8 @@ const CategoryCarousel = () => {
                 <CarouselPrevious />
                 <CarouselNext />
             </Carousel>
-        </div>
+            </div>
+        </section>
     )
 }
 

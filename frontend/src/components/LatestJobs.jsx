@@ -39,17 +39,25 @@ const LatestJobs = () => {
   ];
 
   return (
-    <div className="max-w-7xl mx-auto my-20 px-4">
-      <h1 className="text-3xl font-bold text-center mb-10">
-        Latest Jobs
-      </h1>
+    <section className="shell my-20">
+      <div className="mb-10 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+        <div>
+          <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[#8a5a13]">Fresh Openings</p>
+          <h1 className="text-4xl font-bold text-slate-900">
+            Latest Jobs
+          </h1>
+        </div>
+        <p className="max-w-2xl text-sm leading-6 text-slate-600">
+          A handpicked set of current roles across product, engineering, design, and growth teams.
+        </p>
+      </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {demoJobs.map((job, index) => (
           <Job key={index} job={job} />
         ))}
       </div>
-    </div>
+    </section>
   );
 };
 

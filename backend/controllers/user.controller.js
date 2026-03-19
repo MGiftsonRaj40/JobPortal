@@ -97,13 +97,22 @@ export const login = async (req, res) => {
       });
     }
 
+    const jwtSecret = process.env.SECRET_KEY || process.env.JWT_SECRET;
+
+    if (!jwtSecret) {
+      return res.status(500).json({
+        message: "JWT secret is not configured",
+        success: false
+      });
+    }
+
     const tokenData = {
       userId: user._id
     };
 
     const token = jwt.sign(
       tokenData,
-      process.env.SECRET_KEY,
+      jwtSecret,
       { expiresIn: "1d" }
     );
 

@@ -3,12 +3,17 @@ import jwt from "jsonwebtoken";
 export const isAuthenticated = (req, res, next) => {
   try {
     const token = req.headers.authorization?.split(" ")[1] || req.cookies?.token;
+    const jwtSecret = process.env.SECRET_KEY || process.env.JWT_SECRET;
 
     if (!token) {
       return res.status(401).json({ message: "Not authorized — no token provided", success: false });
     }
 
-    const decoded = jwt.verify(token, process.env.SECRET_KEY);
+    if (!jwtSecret) {
+      return res.status(500).json({ message: "JWT secret is not configured", success: false });
+    }
+
+    const decoded = jwt.verify(token, jwtSecret);
     console.log("Decoded JWT payload:", decoded); 
 
     

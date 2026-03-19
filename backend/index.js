@@ -46,7 +46,16 @@ app.use("/api/v1/application", applicationRoute);
 // Server
 const PORT = process.env.PORT || 8000;
 
-app.listen(PORT, () => {
-  connectDB();
-  console.log(`Server running at port ${PORT}`);
-});
+const startServer = async () => {
+  try {
+    await connectDB();
+    app.listen(PORT, () => {
+      console.log(`Server running at port ${PORT}`);
+    });
+  } catch (error) {
+    console.error("Failed to start server:", error.message);
+    process.exit(1);
+  }
+};
+
+startServer();
