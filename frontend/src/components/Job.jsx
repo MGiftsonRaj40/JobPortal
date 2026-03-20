@@ -1,7 +1,14 @@
 import React from "react";
 import { ArrowRight } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const Job = ({ job }) => {
+  const navigate = useNavigate();
+
+  const handleApplyClick = () => {
+    navigate(`/description/${job._id}`);
+  };
+
   return (
     <div className="group rounded-[28px] border border-[#eadfca] bg-white/85 p-6 shadow-[0_18px_50px_rgba(15,23,42,0.08)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_24px_60px_rgba(15,23,42,0.12)]">
 
@@ -30,7 +37,9 @@ const Job = ({ job }) => {
           ₹{job?.salary || "10 LPA"}
         </span>
 
-        <button className="inline-flex items-center gap-2 rounded-full bg-[#d97706] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#b86308]">
+        <button
+          onClick={handleApplyClick}
+          className="inline-flex items-center gap-2 rounded-full bg-[#d97706] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#b86308]">
           Apply Now
           <ArrowRight className="h-4 w-4 transition group-hover:translate-x-0.5" />
         </button>
