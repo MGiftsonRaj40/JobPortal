@@ -38,24 +38,24 @@ Add your project screenshots to a folder such as `docs/images/` and reference th
 
 ### Frontend
 
-- React
-- Vite
-- Redux Toolkit
-- React Router
-- Axios
-- Tailwind CSS
-- Radix UI
+![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)
+![Redux Toolkit](https://img.shields.io/badge/Redux%20Toolkit-764ABC?style=for-the-badge&logo=redux&logoColor=white)
+![React Router](https://img.shields.io/badge/React%20Router-CA4245?style=for-the-badge&logo=reactrouter&logoColor=white)
+![Axios](https://img.shields.io/badge/Axios-5A29E4?style=for-the-badge&logo=axios&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-0F172A?style=for-the-badge&logo=tailwindcss&logoColor=38BDF8)
+![Radix UI](https://img.shields.io/badge/Radix%20UI-161618?style=for-the-badge&logo=radixui&logoColor=white)
 
 ### Backend
 
-- Node.js
-- Express
-- MongoDB
-- Mongoose
-- JWT
-- Cookie-based auth
-- Multer
-- Cloudinary
+![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
+![Express](https://img.shields.io/badge/Express-000000?style=for-the-badge&logo=express&logoColor=white)
+![MongoDB](https://img.shields.io/badge/MongoDB-001E2B?style=for-the-badge&logo=mongodb&logoColor=47A248)
+![Mongoose](https://img.shields.io/badge/Mongoose-880000?style=for-the-badge&logo=mongoose&logoColor=white)
+![JWT](https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=jsonwebtokens&logoColor=white)
+![Cookie Auth](https://img.shields.io/badge/Cookie%20Auth-3B82F6?style=for-the-badge&logo=googlechrome&logoColor=white)
+![Multer](https://img.shields.io/badge/Multer-FF6B6B?style=for-the-badge&logo=files&logoColor=white)
+![Cloudinary](https://img.shields.io/badge/Cloudinary-3448C5?style=for-the-badge&logo=cloudinary&logoColor=white)
 
 ## Project Structure
 
@@ -300,6 +300,8 @@ Recruiter pages only show records where `created_by` matches the logged-in recru
 - Better test coverage
 
 ## Author
+
+![Applicants Page](docs/images/pic.png)
 
 Priyanshi Dwivedi
 
