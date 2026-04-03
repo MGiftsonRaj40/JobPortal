@@ -18,30 +18,21 @@ Add your project screenshots to a folder such as `docs/images/` and reference th
 
 ### Home Page
 
-```md
 ![Home Page](docs/images/home.png)
-```
 
 ### Student Dashboard
 
-```md
 ![Student Dashboard](docs/images/stud.png)
-```
-```md
+
 ![Student Dashboard](docs/images/stud2.png)
-```
 
 ### Recruiter Dashboard
 
-```md
 ![Recruiter Dashboard](docs/images/rec.png)
-```
 
 ### Applicants Page
 
-```md
 ![Applicants Page](docs/images/rec2.png)
-```
 
 ## Tech Stack
 
