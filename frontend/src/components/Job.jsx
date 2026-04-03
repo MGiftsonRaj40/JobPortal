@@ -4,8 +4,12 @@ import { useNavigate } from "react-router-dom";
 
 const Job = ({ job }) => {
   const navigate = useNavigate();
+  const hasDetailsPage = Boolean(job?._id);
 
   const handleApplyClick = () => {
+    if (!hasDetailsPage) {
+      return;
+    }
     navigate(`/description/${job._id}`);
   };
 
@@ -39,8 +43,13 @@ const Job = ({ job }) => {
 
         <button
           onClick={handleApplyClick}
-          className="inline-flex items-center gap-2 rounded-full bg-[#d97706] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#b86308]">
-          Apply Now
+          disabled={!hasDetailsPage}
+          className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold transition ${
+            hasDetailsPage
+              ? "bg-[#d97706] text-white hover:bg-[#b86308]"
+              : "cursor-default bg-slate-200 text-slate-500"
+          }`}>
+          {hasDetailsPage ? "Apply Now" : "Sample Job"}
           <ArrowRight className="h-4 w-4 transition group-hover:translate-x-0.5" />
         </button>
       </div>

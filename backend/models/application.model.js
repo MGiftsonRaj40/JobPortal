@@ -4,7 +4,9 @@ const applicationSchema = new mongoose.Schema(
   {
     job: { type: mongoose.Schema.Types.ObjectId, ref: "Job", required: true },
     applicant: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
-    status: { type: String, enum: ["pending", "accepted", "rejected"], default: "pending" },
+    status: { type: String, enum: ["applied", "shortlisted", "rejected"], default: "applied" },
+    matchPercentage: { type: Number, default: 0 },
+    matchedSkills: { type: [String], default: [] }
   },
   { timestamps: true }
 );

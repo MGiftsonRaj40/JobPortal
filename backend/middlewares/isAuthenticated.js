@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 export const isAuthenticated = (req, res, next) => {
   try {
     const token = req.headers.authorization?.split(" ")[1] || req.cookies?.token;
-    const jwtSecret = process.env.SECRET_KEY || process.env.JWT_SECRET;
+    const jwtSecret = process.env.JWT_SECRET_KEY || process.env.SECRET_KEY || process.env.JWT_SECRET;
 
     if (!token) {
       return res.status(401).json({ message: "Not authorized — no token provided", success: false });

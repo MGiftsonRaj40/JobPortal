@@ -97,7 +97,7 @@ export const login = async (req, res) => {
       });
     }
 
-    const jwtSecret = process.env.SECRET_KEY || process.env.JWT_SECRET;
+    const jwtSecret = process.env.JWT_SECRET_KEY || process.env.SECRET_KEY || process.env.JWT_SECRET;
 
     if (!jwtSecret) {
       return res.status(500).json({
@@ -168,7 +168,7 @@ export const logout = async (req, res) => {
 // UPDATE PROFILE
 export const updateProfile = async (req, res) => {
   try {
-    const { fullname, email, phoneNumber, bio, skills } = req.body;
+    const { fullname, email, phoneNumber, bio, skills, branch, cgpa } = req.body;
     const file = req.file;
 
     let cloudResponse;
@@ -197,8 +197,11 @@ export const updateProfile = async (req, res) => {
     if (fullname) user.fullname = fullname;
     if (email) user.email = email;
     if (phoneNumber) user.phoneNumber = phoneNumber;
+    if (!user.profile) user.profile = {};
     if (bio) user.profile.bio = bio;
     if (skills) user.profile.skills = skillsArray;
+    if (branch !== undefined) user.profile.branch = branch;
+    if (cgpa !== undefined && cgpa !== "") user.profile.cgpa = Number(cgpa);
 
     if (cloudResponse) {
       user.profile.resume = cloudResponse.secure_url;

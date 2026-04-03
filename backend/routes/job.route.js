@@ -14,12 +14,12 @@ const router = express.Router();
 router.post("/post", isAuthenticated, postJob);
 
 //GET all jobs
-router.get("/get", isAuthenticated, getAllJobs);
+router.get("/get", getAllJobs);
 
 // GET admin jobs
 router.get("/getadminjobs", isAuthenticated, getAdminJobs);
 
 // GET job by ID
-router.get("/get/:id", isAuthenticated, getJobById);
+router.get("/get/:id", getJobById);
 
 export default router;

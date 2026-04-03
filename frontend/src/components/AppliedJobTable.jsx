@@ -5,6 +5,12 @@ import { useSelector } from 'react-redux'
 
 const AppliedJobTable = () => {
     const {allAppliedJobs} = useSelector(store=>store.job);
+    const getStatusClasses = (status) => {
+        if (status === "shortlisted") return "bg-green-500";
+        if (status === "rejected") return "bg-red-500";
+        return "bg-amber-500";
+    };
+
     return (
         <div>
             <Table>
@@ -14,6 +20,7 @@ const AppliedJobTable = () => {
                         <TableHead>Date</TableHead>
                         <TableHead>Job Role</TableHead>
                         <TableHead>Company</TableHead>
+                        <TableHead>Match</TableHead>
                         <TableHead className="text-right">Status</TableHead>
                     </TableRow>
                 </TableHeader>
@@ -24,7 +31,8 @@ const AppliedJobTable = () => {
                                 <TableCell>{appliedJob?.createdAt?.split("T")[0]}</TableCell>
                                 <TableCell>{appliedJob.job?.title}</TableCell>
                                 <TableCell>{appliedJob.job?.company?.name}</TableCell>
-                                <TableCell className="text-right"><Badge className={`${appliedJob?.status === "rejected" ? 'bg-red-400' : appliedJob.status === 'pending' ? 'bg-gray-400' : 'bg-green-400'}`}>{appliedJob.status.toUpperCase()}</Badge></TableCell>
+                                <TableCell>{appliedJob?.matchPercentage ?? 0}%</TableCell>
+                                <TableCell className="text-right"><Badge className={getStatusClasses(appliedJob?.status)}>{appliedJob?.status?.toUpperCase()}</Badge></TableCell>
                             </TableRow>
                         ))
                     }

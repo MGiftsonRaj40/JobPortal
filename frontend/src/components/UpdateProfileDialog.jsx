@@ -19,7 +19,9 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
         email: user?.email || "",
         phoneNumber: user?.phoneNumber || "",
         bio: user?.profile?.bio || "",
-        skills: user?.profile?.skills?.map(skill => skill) || "",
+        skills: user?.profile?.skills?.join(", ") || "",
+        branch: user?.profile?.branch || "",
+        cgpa: user?.profile?.cgpa ?? "",
         file: user?.profile?.resume || ""
     });
     const dispatch = useDispatch();
@@ -41,6 +43,8 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
         formData.append("phoneNumber", input.phoneNumber);
         formData.append("bio", input.bio);
         formData.append("skills", input.skills);
+        formData.append("branch", input.branch);
+        formData.append("cgpa", input.cgpa);
         if (input.file) {
             formData.append("file", input.file);
         }
@@ -81,7 +85,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
                                 <Label htmlFor="name" className="text-right">Name</Label>
                                 <Input
                                     id="name"
-                                    name="name"
+                                    name="fullname"
                                     type="text"
                                     value={input.fullname}
                                     onChange={changeEventHandler}
@@ -103,7 +107,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
                                 <Label htmlFor="number" className="text-right">Number</Label>
                                 <Input
                                     id="number"
-                                    name="number"
+                                    name="phoneNumber"
                                     value={input.phoneNumber}
                                     onChange={changeEventHandler}
                                     className="col-span-3"
@@ -125,6 +129,32 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
                                     id="skills"
                                     name="skills"
                                     value={input.skills}
+                                    placeholder="React, Node.js, MongoDB"
+                                    onChange={changeEventHandler}
+                                    className="col-span-3"
+                                />
+                            </div>
+                            <div className='grid grid-cols-4 items-center gap-4'>
+                                <Label htmlFor="branch" className="text-right">Branch</Label>
+                                <Input
+                                    id="branch"
+                                    name="branch"
+                                    value={input.branch}
+                                    placeholder="CSE"
+                                    onChange={changeEventHandler}
+                                    className="col-span-3"
+                                />
+                            </div>
+                            <div className='grid grid-cols-4 items-center gap-4'>
+                                <Label htmlFor="cgpa" className="text-right">CGPA</Label>
+                                <Input
+                                    id="cgpa"
+                                    name="cgpa"
+                                    type="number"
+                                    min="0"
+                                    max="10"
+                                    step="0.1"
+                                    value={input.cgpa}
                                     onChange={changeEventHandler}
                                     className="col-span-3"
                                 />

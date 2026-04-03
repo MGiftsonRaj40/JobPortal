@@ -45,7 +45,11 @@ export const login = async (req, res) => {
       return res.status(503).json({ message: "Database not connected" });
     }
 
-    const { email, password } = req.body;
+    const { email, password, role } = req.body;
+
+    if (!email || !password || !role) {
+      return res.status(400).json({ message: "All fields required" });
+    }
 
     const user = await User.findOne({ email });
     if (!user) return res.status(400).json({ message: "Invalid email" });
@@ -53,7 +57,11 @@ export const login = async (req, res) => {
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) return res.status(400).json({ message: "Invalid password" });
 
-    const jwtSecret = process.env.JWT_SECRET || process.env.SECRET_KEY;
+    if (user.role !== role) {
+      return res.status(400).json({ message: "Account doesn't exist with current role" });
+    }
+
+    const jwtSecret = process.env.JWT_SECRET_KEY || process.env.JWT_SECRET || process.env.SECRET_KEY;
 
     if (!jwtSecret) {
       return res.status(500).json({ message: "JWT secret is not configured" });
@@ -63,11 +71,28 @@ export const login = async (req, res) => {
       expiresIn: "1d"
     });
 
-    res.json({
-      message: "Login successful",
-      token,
-      user
-    });
+    const safeUser = {
+      _id: user._id,
+      fullname: user.fullname,
+      email: user.email,
+      phoneNumber: user.phoneNumber,
+      role: user.role,
+      profile: user.profile
+    };
+
+    res
+      .status(200)
+      .cookie("token", token, {
+        maxAge: 1 * 24 * 60 * 60 * 1000,
+        httpOnly: true,
+        sameSite: "lax"
+      })
+      .json({
+        message: "Login successful",
+        success: true,
+        token,
+        user: safeUser
+      });
 
   } catch (err) {
     console.error("Login error:", err);
