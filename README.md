@@ -1,512 +1,317 @@
-# 💼 Job Portal - Full Stack MERN Application
+﻿# Job Portal
 
-> A comprehensive job portal platform built with the MERN stack. Connect job seekers with opportunities and enable recruiters to manage their job postings efficiently.
+A full-stack MERN job portal for students and recruiters. Students can browse jobs, apply, and track their application status. Recruiters can create companies, post jobs, review applicants, and shortlist candidates.
 
-[![Node.js](https://img.shields.io/badge/Node.js-18+-green)](https://nodejs.org/)
-[![React](https://img.shields.io/badge/React-18+-blue)](https://react.dev/)
-[![MongoDB](https://img.shields.io/badge/MongoDB-Latest-brightgreen)](https://www.mongodb.com/)
-[![License](https://img.shields.io/badge/License-MIT-yellow)]()
+## Highlights
 
----
+- Student and recruiter authentication
+- Recruiter company management
+- Job posting and job browsing
+- Application tracking with `applied`, `shortlisted`, and `rejected` states
+- Skill-based shortlisting with match percentage
+- Applicant filtering by skills, CGPA, and branch
+- Resume upload support
 
-## 📋 Table of Contents
+## Images
 
-- [Project Overview](#project-overview)
-- [Features](#features)
-- [Tech Stack](#tech-stack)
-- [Prerequisites](#prerequisites)
-- [Installation & Setup](#installation--setup)
-- [Environment Variables](#environment-variables)
-- [Running the Application](#running-the-application)
-- [Project Structure](#project-structure)
-- [API Endpoints](#api-endpoints)
-- [Usage Guide](#usage-guide)
-- [File Upload (Cloudinary)](#file-upload-cloudinary)
-- [Contributing](#contributing)
-- [License](#license)
+Add your project screenshots to a folder such as `docs/images/` and reference them here.
 
----
+### Home Page
 
-## 🎯 Project Overview
+```md
+![Home Page](docs/images/home.png)
+```
 
-Job Portal is a full-stack web application that connects job seekers with employers. The platform provides:
+### Student Dashboard
 
-- **Job Seekers**: Browse job listings, apply for positions, track applications, and manage profiles
-- **Recruiters**: Post job openings, review applications, manage companies, and update hiring status
-- **Real-time Updates**: Live application counts and status updates
-- **Secure Authentication**: JWT-based authentication with cookie management
+```md
+![Student Dashboard](docs/images/stud.png)
+```
+```md
+![Student Dashboard](docs/images/stud2.png)
+```
 
-This project was developed as a final year college project showcasing full-stack development capabilities.
+### Recruiter Dashboard
 
----
+```md
+![Recruiter Dashboard](docs/images/rec.png)
+```
 
-## 🚀 Features
+### Applicants Page
 
-### For Job Seekers
-✅ **User Authentication**
-- Secure signup and login
-- JWT token-based authentication
-- Profile management and updates
+```md
+![Applicants Page](docs/images/rec2.png)
+```
 
-✅ **Job Discovery**
-- Browse all available jobs
-- Advanced search and filtering
-- Job category carousel
-- Job details view with company information
-
-✅ **Job Applications**
-- One-click job application
-- Track applied jobs
-- View application status
-- Prevent duplicate applications
-
-✅ **Profile Management**
-- Upload resume (via Cloudinary)
-- Update profile information
-- Profile dialog for quick edits
-
-### For Recruiters
-✅ **Company Management**
-- Create and manage company profiles
-- Upload company logo
-- Add company details (website, industry, location)
-- View all company jobs
-
-✅ **Job Posting**
-- Create new job postings
-- Set requirements and qualifications
-- Manage multiple job listings
-- View job applicants per listing
-
-✅ **Application Management**
-- View all applicants for each job
-- Update application status (pending, accepted, rejected)
-- Track hiring progress
-- View applicant resumes and profiles
-
-✅ **Admin Dashboard**
-- Comprehensive admin interface
-- All jobs management
-- All companies management
-- Applicants management
-
----
-
-## 🛠️ Tech Stack
+## Tech Stack
 
 ### Frontend
-- **React.js** (18+) - UI Framework
-- **Vite** - Build tool for fast development
-- **Redux Toolkit** - State management
-- **React Router** - Routing
-- **Axios** - HTTP client
-- **Tailwind CSS** - Styling
-- **Sonner** - Toast notifications
-- **Lucide React** - Icons
+
+- React
+- Vite
+- Redux Toolkit
+- React Router
+- Axios
+- Tailwind CSS
+- Radix UI
 
 ### Backend
-- **Node.js** - Runtime environment
-- **Express.js** (5.1+) - Web framework
-- **MongoDB** - NoSQL database
-- **Mongoose** - MongoDB ODM
-- **JWT** - Authentication
-- **Bcryptjs** - Password hashing
-- **Multer** - File uploads
-- **Cloudinary** - Image storage
-- **DataURI** - File conversion
 
-### Development Tools
-- **Nodemon** - Auto-reload on file changes
-- **npm** - Package manager
-- **Git** - Version control
+- Node.js
+- Express
+- MongoDB
+- Mongoose
+- JWT
+- Cookie-based auth
+- Multer
+- Cloudinary
 
----
+## Project Structure
 
-## 📋 Prerequisites
+```text
+jobportal/
+├─ backend/
+│  ├─ controllers/
+│  ├─ middlewares/
+│  ├─ models/
+│  ├─ routes/
+│  ├─ scripts/
+│  ├─ utils/
+│  ├─ index.js
+│  └─ package.json
+├─ frontend/
+│  ├─ public/
+│  ├─ src/
+│  │  ├─ components/
+│  │  ├─ hooks/
+│  │  ├─ redux/
+│  │  ├─ utils/
+│  │  ├─ App.jsx
+│  │  └─ main.jsx
+│  └─ package.json
+└─ README.md
+```
 
-Before you begin, ensure you have:
+## Features
 
-- **Node.js** (v18 or higher) - [Download](https://nodejs.org/)
-- **npm** (v8 or higher) - Comes with Node.js
-- **MongoDB** - [Local](https://www.mongodb.com/try/download/community) or [Cloud](https://www.mongodb.com/cloud/atlas)
-- **Cloudinary Account** - [Sign Up](https://cloudinary.com/) for file uploads
-- **Git** - [Download](https://git-scm.com/)
-- **Code Editor** - VS Code recommended
+### Student Side
 
----
+- Sign up and log in
+- Browse jobs
+- View job details
+- Apply to jobs
+- View applied jobs and status
+- Update profile with skills, branch, CGPA, and resume
 
-## 📦 Installation & Setup
+### Recruiter Side
 
-### 1. Clone the Repository
+- Sign up and log in as recruiter
+- Create and update company profiles
+- Post jobs
+- View jobs created by the logged-in recruiter
+- View applicants for each job
+- Filter applicants by skills, branch, and CGPA
+- Update applicant status
+
+## Environment Variables
+
+Create `backend/.env`:
+
+```env
+MONGO_URI=your_mongodb_connection_string
+PORT=8000
+JWT_SECRET=your_secret_key
+
+# Optional for uploads
+CLOUD_NAME=your_cloudinary_name
+API_KEY=your_cloudinary_api_key
+API_SECRET=your_cloudinary_api_secret
+```
+
+Notes:
+
+- `JWT_SECRET_KEY`, `JWT_SECRET`, and `SECRET_KEY` are all supported by the backend.
+- The frontend currently uses hardcoded API constants pointing to `http://localhost:8000`.
+
+## Installation
+
+### 1. Clone the repository
 
 ```bash
 git clone https://github.com/Priyanshi-678/jobportal.git
 cd jobportal
 ```
 
-### 2. Backend Setup
+### 2. Install backend dependencies
 
 ```bash
 cd backend
 npm install
 ```
 
-### 3. Frontend Setup
+### 3. Install frontend dependencies
 
 ```bash
 cd ../frontend
 npm install
 ```
 
----
+## Run Locally
 
-## 🔐 Environment Variables
+### Backend
 
-### Backend (`backend/.env`)
-
-Create a `.env` file in the backend directory:
-
-```env
-PORT=8000
-MONGO_URI=mongodb://localhost:27017/jobportal
-# Or use MongoDB Atlas:
-# MONGO_URI=mongodb+srv://username:password@cluster.mongodb.net/jobportal
-
-SECRET_KEY=your_jwt_secret_key_here
-JWT_SECRET=your_jwt_secret_key_here
-
-# Cloudinary Configuration
-CLOUD_NAME=your_cloudinary_name
-API_KEY=your_cloudinary_api_key
-API_SECRET=your_cloudinary_api_secret
-
-NODE_ENV=development
-```
-
-### Frontend (`frontend/.env.local`)
-
-Create a `.env.local` file in the frontend directory:
-
-```env
-VITE_API_BASE_URL=http://localhost:8000
-```
-
-**Note:** API endpoints are already configured in `frontend/src/utils/constant.js`
-
----
-
-## 🚀 Running the Application
-
-### Option 1: Run Backend and Frontend Separately
-
-**Terminal 1 - Backend:**
 ```bash
 cd backend
 npm run dev
 ```
-Backend runs at: `http://localhost:8000`
 
-**Terminal 2 - Frontend:**
+Backend runs on:
+
+```text
+http://localhost:8000
+```
+
+### Frontend
+
 ```bash
 cd frontend
 npm run dev
 ```
-Frontend runs at: `http://localhost:5173` (or next available port)
 
-### Option 2: Run Both Concurrently
+Frontend usually runs on:
 
-From the root directory, if you have `concurrently` installed:
+```text
+http://localhost:5173
+```
+
+Vite may use `5174` or `5175` if the earlier ports are occupied.
+
+## Important Auth Note
+
+Protected recruiter and student routes rely on a login cookie from the backend. If login succeeds but protected requests return `401`:
+
+1. Restart the backend
+2. Clear site data for `http://localhost:8000` and your Vite frontend origin
+3. Log in again
+
+## Seed / Utility Scripts
+
+Inside `backend/scripts/`:
+
+- `seedData.js`
+  Creates linked sample users, companies, jobs, and applications.
+
+- `assignCompaniesAndJobsToRecruiters.js`
+  Ensures every recruiter has a company and jobs.
+
+Run a script like this:
 
 ```bash
-npm install -g concurrently
-concurrently "npm run dev --prefix backend" "npm run dev --prefix frontend"
+cd backend
+node scripts/seedData.js
 ```
 
----
+If you use MongoDB Atlas, make sure your IP is allowed in Atlas Network Access before running seed scripts.
 
-## 📂 Project Structure
+## Main API Routes
 
-```
-jobportal/
-│
-├── backend/
-│   ├── controllers/          # Route handlers
-│   │   ├── authController.js
-│   │   ├── user.controller.js
-│   │   ├── job.controller.js
-│   │   ├── company.controller.js
-│   │   └── application.controller.js
-│   │
-│   ├── models/               # Database schemas
-│   │   ├── user.model.js
-│   │   ├── job.model.js
-│   │   ├── company.model.js
-│   │   └── application.model.js
-│   │
-│   ├── routes/               # API endpoints
-│   │   ├── authRoutes.js
-│   │   ├── user.routes.js
-│   │   ├── job.route.js
-│   │   ├── company.route.js
-│   │   └── application.route.js
-│   │
-│   ├── middlewares/          # Custom middleware
-│   │   ├── isAuthenticated.js
-│   │   └── multer.js
-│   │
-│   ├── utils/                # Utility functions
-│   │   ├── db.js
-│   │   ├── cloudinary.js
-│   │   └── datauri.js
-│   │
-│   ├── index.js              # Server entry point
-│   ├── package.json
-│   └── .env
-│
-├── frontend/
-│   ├── src/
-│   │   ├── components/       # React components
-│   │   │   ├── auth/
-│   │   │   ├── admin/
-│   │   │   ├── shared/
-│   │   │   ├── ui/
-│   │   │   ├── Home.jsx
-│   │   │   ├── Jobs.jsx
-│   │   │   ├── Browse.jsx
-│   │   │   ├── JobDescription.jsx
-│   │   │   └── ...
-│   │   │
-│   │   ├── hooks/            # Custom React hooks
-│   │   │   ├── useGetAllJobs.jsx
-│   │   │   ├── useGetAllCompanies.jsx
-│   │   │   ├── useGetAppliedJobs.jsx
-│   │   │   └── ...
-│   │   │
-│   │   ├── redux/            # Redux state management
-│   │   │   ├── authSlice.js
-│   │   │   ├── jobSlice.js
-│   │   │   ├── companySlice.js
-│   │   │   ├── applicationSlice.js
-│   │   │   └── store.js
-│   │   │
-│   │   ├── utils/            # Utility files
-│   │   │   └── constant.js
-│   │   │
-│   │   ├── lib/              # Library functions
-│   │   │   └── utils.js
-│   │   │
-│   │   ├── App.jsx
-│   │   ├── main.jsx
-│   │   ├── index.css
-│   │   └── App.css
-│   │
-│   ├── public/               # Static assets
-│   ├── package.json
-│   ├── vite.config.js
-│   ├── tailwind.config.js
-│   ├── postcss.config.js
-│   └── jsconfig.json
-│
-└── README.md
+### Auth
+
+```text
+POST /api/auth/register
+POST /api/auth/login
 ```
 
----
+### User
 
-## 🔌 API Endpoints
-
-### Authentication Routes
-```
-POST   /api/auth/register         - Register new user
-POST   /api/auth/login            - Login user
-GET    /api/auth/logout           - Logout user
-```
-
-### User Routes
-```
-GET    /api/v1/user/profile       - Get user profile
-POST   /api/v1/user/profile/update - Update user profile
+```text
+POST /api/v1/user/register
+POST /api/v1/user/login
+GET  /api/v1/user/logout
+PUT  /api/v1/user/profile
+POST /api/v1/user/profile/update
 ```
 
-### Job Routes
-```
-GET    /api/v1/job/get            - Get all jobs
-GET    /api/v1/job/get/:id        - Get single job
-POST   /api/v1/job/post           - Post new job (Recruiter)
-GET    /api/v1/job/admin/jobs     - Get jobs posted by recruiter
-```
+### Company
 
-### Company Routes
-```
-GET    /api/v1/company/get        - Get all companies
-POST   /api/v1/company/register   - Register company
-GET    /api/v1/company/get/:id    - Get company by ID
-PUT    /api/v1/company/update/:id - Update company (Recruiter)
+```text
+POST /api/v1/company/register
+GET  /api/v1/company/get
+GET  /api/v1/company/get/:id
+PUT  /api/v1/company/update/:id
 ```
 
-### Application Routes
+### Job
+
+```text
+POST /api/v1/job/post
+GET  /api/v1/job/get
+GET  /api/v1/job/get/:id
+GET  /api/v1/job/getadminjobs
 ```
-GET    /api/v1/application/apply/:id     - Submit application
-GET    /api/v1/application/get           - Get user's applications
-GET    /api/v1/application/applicants/:id - Get job applicants
-POST   /api/v1/application/status/:id/update - Update application status
+
+### Application
+
+```text
+GET  /api/v1/application/apply/:id
+GET  /api/v1/application/get
+GET  /api/v1/application/:id/applicants
+POST /api/v1/application/status/:id/update
 ```
 
----
+## Current Behavior Notes
 
-## 💡 Usage Guide
+- `/jobs` can show fallback sample cards if backend jobs are empty.
+- Recruiter admin pages only show records owned by the logged-in recruiter.
+- Applicant shortlisting uses job requirements matched against student profile skills.
 
-### For Job Seekers
+## Suggested Demo Accounts
 
-1. **Sign Up**: Create a new account with email and password
-2. **Complete Profile**: Add your resume and profile information
-3. **Browse Jobs**: Explore available job listings
-4. **Apply**: Click "Apply Now" on any job listing
-5. **Track Applications**: View your applied jobs and their status
+If you have seeded the database, these sample credentials may exist:
 
-### For Recruiters
+```text
+Recruiters:
+rohan.recruiter@example.com / Recruiter@123
+nisha.recruiter@example.com / Recruiter@123
 
-1. **Sign Up**: Create recruiter account
-2. **Create Company**: Register your company with details
-3. **Post Jobs**: Create new job postings with requirements
-4. **Manage Applications**: Review applicant profiles and update status
-5. **Track Hiring**: Monitor applicant progress
+Students:
+aarav.student@example.com / Student@123
+meera.student@example.com / Student@123
+```
 
-### For Admins
+## Troubleshooting
 
-1. Access admin dashboard
-2. View all jobs and companies
-3. Manage users and job listings
-4. Monitor applications and hiring
+### Backend is not running
 
----
+Make sure:
 
-## 📸 File Upload (Cloudinary)
+- MongoDB is reachable
+- `backend/.env` exists
+- Port `8000` is not occupied by another process
 
-### Setting Up Cloudinary
+### Atlas connection fails
 
-1. **Create Account**: Sign up at [Cloudinary](https://cloudinary.com/)
-2. **Get Credentials**:
-   - Cloud Name
-   - API Key
-   - API Secret
-3. **Add to `.env`**:
-   ```env
-   CLOUD_NAME=your_cloud_name
-   API_KEY=your_api_key
-   API_SECRET=your_api_secret
-   ```
+If you use MongoDB Atlas and seed scripts fail:
 
-### Upload Features
-- Resume uploads for job seekers
-- Company logo uploads for recruiters
-- Automatic image optimization
-- Secure storage
+- add your current IP in Atlas Network Access
+- retry the script
 
----
+### Recruiter sees no companies or jobs
 
-## 🤝 Contributing
+Recruiter pages only show records where `created_by` matches the logged-in recruiter. Seed or create company/job records for that recruiter first.
 
-Contributions are welcome! Here's how to contribute:
+## Future Improvements
 
-1. **Fork** the repository
-2. **Create** a feature branch (`git checkout -b feature/amazing-feature`)
-3. **Commit** your changes (`git commit -m 'Add amazing feature'`)
-4. **Push** to the branch (`git push origin feature/amazing-feature`)
-5. **Open** a Pull Request
+- Better search and filters on public job browsing
+- Real dashboard analytics for recruiters
+- Email notifications
+- Pagination on large job/applicant lists
+- Better test coverage
 
-### Contributing Guidelines
-- Follow the existing code style
-- Add comments for complex logic
-- Test your changes before submitting PR
-- Update README if needed
-
----
-
-## 📝 License
-
-This project is licensed under the **MIT License** - see the LICENSE file for details.
-
----
-
-## 👨‍💼 Author
-
-**Priyanshi** - [GitHub Profile](https://github.com/Priyanshi-678)
-
----
-
-## 📞 Support
-
-For support and questions:
-- Open an [Issue](https://github.com/Priyanshi-678/jobportal/issues)
-- Contact via email or GitHub
-- Check existing issues for solutions
-
----
-
-## 🎓 Learning Resources
-
-This project showcases:
-- Full-stack MERN development
-- RESTful API design
-- JWT authentication
-- Redux state management
-- Tailwind CSS styling
-- File upload handling
-- MongoDB data modeling
-- React hooks and components
-- Error handling and validation
-
----
-
-## 🗺️ Roadmap
-
-Future enhancements:
-- [ ] Email notifications for applications
-- [ ] Advanced job filtering and search
-- [ ] Real-time notifications with WebSocket
-- [ ] Interview scheduling system
-- [ ] Rating and review system
-- [ ] Job recommendation engine
-- [ ] Mobile app version
-- [ ] Dark mode support
-
----
-
-## 📊 Project Statistics
-
-- **Frontend**: 18+ Components
-- **Backend**: 5+ Controllers
-- **Database Models**: 4+ Collections
-- **API Endpoints**: 20+ Routes
-- **Total Lines of Code**: 5000+
-
----
-
-**Last Updated**: March 2024
-**Version**: 1.0.0
-
----
-
-**Made with ❤️ for learning and professional development**
-
----
-
-🔐 Environment Variables
-
-Create a ".env" file in backend:
-
-MONGO_URI=your_mongodb_connection_string
-JWT_SECRET=your_secret_key
-PORT=5000
-
----
-
-👩‍💻 Author
+## Author
 
 Priyanshi Dwivedi
 
----
+## License
 
-📌 Note
-
-This project is for educational purposes.
+This project is for educational and portfolio use.
