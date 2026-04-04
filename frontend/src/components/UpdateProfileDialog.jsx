@@ -20,9 +20,10 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
         phoneNumber: user?.phoneNumber || "",
         bio: user?.profile?.bio || "",
         skills: user?.profile?.skills?.join(", ") || "",
+        qualifications: user?.profile?.qualifications?.join(", ") || "",
         branch: user?.profile?.branch || "",
         cgpa: user?.profile?.cgpa ?? "",
-        file: user?.profile?.resume || ""
+        file: null
     });
     const dispatch = useDispatch();
 
@@ -43,6 +44,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
         formData.append("phoneNumber", input.phoneNumber);
         formData.append("bio", input.bio);
         formData.append("skills", input.skills);
+        formData.append("qualifications", input.qualifications);
         formData.append("branch", input.branch);
         formData.append("cgpa", input.cgpa);
         if (input.file) {
@@ -134,6 +136,18 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
                                     className="col-span-3"
                                 />
                             </div>
+                            <div className='grid grid-cols-4 items-start gap-4'>
+                                <Label htmlFor="qualifications" className="pt-2 text-right">Qualifications</Label>
+                                <textarea
+                                    id="qualifications"
+                                    name="qualifications"
+                                    value={input.qualifications}
+                                    placeholder="B.Tech CSE, AWS Cloud Practitioner, NPTEL Java"
+                                    onChange={changeEventHandler}
+                                    rows={3}
+                                    className="col-span-3 min-h-[88px] rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                                />
+                            </div>
                             <div className='grid grid-cols-4 items-center gap-4'>
                                 <Label htmlFor="branch" className="text-right">Branch</Label>
                                 <Input
@@ -161,14 +175,23 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
                             </div>
                             <div className='grid grid-cols-4 items-center gap-4'>
                                 <Label htmlFor="file" className="text-right">Resume</Label>
-                                <Input
-                                    id="file"
-                                    name="file"
-                                    type="file"
-                                    accept="application/pdf"
-                                    onChange={fileChangeHandler}
-                                    className="col-span-3"
-                                />
+                                <div className='col-span-3 space-y-2'>
+                                    <Input
+                                        id="file"
+                                        name="file"
+                                        type="file"
+                                        accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                                        onChange={fileChangeHandler}
+                                    />
+                                    <p className='text-xs text-muted-foreground'>
+                                        Upload PDF, DOC, or DOCX up to 5MB.
+                                    </p>
+                                    {(input.file?.name || user?.profile?.resumeOriginalName) && (
+                                        <p className='text-xs text-slate-600'>
+                                            Selected: {input.file?.name || user?.profile?.resumeOriginalName}
+                                        </p>
+                                    )}
+                                </div>
                             </div>
                         </div>
                         <DialogFooter>

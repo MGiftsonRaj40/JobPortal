@@ -10,6 +10,7 @@ const userSchema = new mongoose.Schema(
     profile: {
       bio: { type: String, default: "" },
       skills: { type: [String], default: [] },
+      qualifications: { type: [String], default: [] },
       branch: { type: String, default: "" },
       cgpa: { type: Number, default: null },
       resume: { type: String, default: "" },

@@ -168,21 +168,24 @@ export const logout = async (req, res) => {
 // UPDATE PROFILE
 export const updateProfile = async (req, res) => {
   try {
-    const { fullname, email, phoneNumber, bio, skills, branch, cgpa } = req.body;
+    const { fullname, email, phoneNumber, bio, skills, qualifications, branch, cgpa } = req.body;
     const file = req.file;
 
     let cloudResponse;
 
     if (file) {
       const fileUri = getDataUri(file);
-      cloudResponse = await cloudinary.uploader.upload(fileUri.content);
+      cloudResponse = await cloudinary.uploader.upload(fileUri.content, {
+        resource_type: "raw",
+        folder: "jobportal/resumes"
+      });
     }
 
-    let skillsArray;
-
-    if (skills) {
-      skillsArray = skills.split(",");
-    }
+    const parseList = (value) =>
+      value
+        .split(/[\n,]+/)
+        .map((item) => item.trim())
+        .filter(Boolean);
 
     const userId = req.id;
     let user = await User.findById(userId);
@@ -198,10 +201,13 @@ export const updateProfile = async (req, res) => {
     if (email) user.email = email;
     if (phoneNumber) user.phoneNumber = phoneNumber;
     if (!user.profile) user.profile = {};
-    if (bio) user.profile.bio = bio;
-    if (skills) user.profile.skills = skillsArray;
+    if (bio !== undefined) user.profile.bio = bio;
+    if (skills !== undefined) user.profile.skills = parseList(skills);
+    if (qualifications !== undefined) user.profile.qualifications = parseList(qualifications);
     if (branch !== undefined) user.profile.branch = branch;
-    if (cgpa !== undefined && cgpa !== "") user.profile.cgpa = Number(cgpa);
+    if (cgpa !== undefined) {
+      user.profile.cgpa = cgpa === "" ? null : Number(cgpa);
+    }
 
     if (cloudResponse) {
       user.profile.resume = cloudResponse.secure_url;
