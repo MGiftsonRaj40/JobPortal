@@ -2,6 +2,8 @@ import express from "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import dotenv from "dotenv";
+import path from "path";
+import { fileURLToPath } from "url";
 import connectDB from "./utils/db.js";
 import userRoute from "./routes/user.routes.js";
 import companyRoute from "./routes/company.route.js";
@@ -12,6 +14,8 @@ import authRoutes from "./routes/authRoutes.js";
 dotenv.config({});
 
 const app = express();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // CORS MUST BE FIRST (VERY IMPORTANT)
 const allowedOrigins = [
@@ -35,6 +39,7 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // Routes (AFTER CORS)
 app.use("/api/auth", authRoutes);

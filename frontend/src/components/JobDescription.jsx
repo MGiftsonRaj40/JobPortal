@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+﻿import React, { useEffect, useState } from 'react'
 import { Badge } from './ui/badge'
 import { Button } from './ui/button'
 import { useParams, useNavigate } from 'react-router-dom'
@@ -20,6 +20,7 @@ const JobDescription = () => {
     const jobId = params.id
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const salaryLabel = singleJob?.salary ? `${singleJob.salary} LPA` : 'NA'
 
     const applyJobHandler = async () => {
         try {
@@ -68,7 +69,6 @@ const JobDescription = () => {
 
     return (
         <div className='min-h-screen bg-gradient-to-br from-slate-50 to-slate-100'>
-            {/* Header Section */}
             <div className='bg-white border-b border-gray-200'>
                 <div className='max-w-6xl mx-auto px-4 py-6'>
                     <button
@@ -89,7 +89,7 @@ const JobDescription = () => {
                                     {singleJob?.jobType}
                                 </Badge>
                                 <Badge className='text-purple-700 font-semibold bg-purple-100' variant="ghost">
-                                    ₹{singleJob?.salary} LPA
+                                    ₹{salaryLabel}
                                 </Badge>
                             </div>
                         </div>
@@ -101,18 +101,15 @@ const JobDescription = () => {
                                     : 'bg-[#7209b7] hover:bg-[#5f32ad] text-white'
                                 }`}
                         >
-                            {loading ? 'Applying...' : isApplied ? '✓ Already Applied' : 'Apply Now'}
+                            {loading ? 'Applying...' : isApplied ? 'Already Applied' : 'Apply Now'}
                         </Button>
                     </div>
                 </div>
             </div>
 
-            {/* Main Content */}
             <div className='max-w-6xl mx-auto px-4 py-10'>
                 <div className='grid grid-cols-1 lg:grid-cols-3 gap-8'>
-                    {/* Left Column - Main Content */}
                     <div className='lg:col-span-2 space-y-6'>
-                        {/* About Company */}
                         {singleJob?.company && (
                             <div className='bg-white rounded-xl shadow-md p-6 border border-gray-100'>
                                 <h2 className='text-2xl font-bold text-gray-900 mb-4'>About Company</h2>
@@ -143,13 +140,11 @@ const JobDescription = () => {
                             </div>
                         )}
 
-                        {/* Job Description */}
                         <div className='bg-white rounded-xl shadow-md p-6 border border-gray-100'>
                             <h2 className='text-2xl font-bold text-gray-900 mb-4'>Job Description</h2>
                             <p className='text-gray-700 leading-relaxed whitespace-pre-line'>{singleJob?.description}</p>
                         </div>
 
-                        {/* Requirements */}
                         {singleJob?.requirements && singleJob.requirements.length > 0 && (
                             <div className='bg-white rounded-xl shadow-md p-6 border border-gray-100'>
                                 <h2 className='text-2xl font-bold text-gray-900 mb-4'>Requirements</h2>
@@ -165,9 +160,7 @@ const JobDescription = () => {
                         )}
                     </div>
 
-                    {/* Right Column - Sidebar */}
                     <div className='space-y-6'>
-                        {/* Job Details Card */}
                         <div className='bg-white rounded-xl shadow-md p-6 border border-gray-100'>
                             <h3 className='text-lg font-bold text-gray-900 mb-4'>Job Details</h3>
                             <div className='space-y-4'>
@@ -191,7 +184,7 @@ const JobDescription = () => {
                                     <DollarSign size={20} className='text-[#7209b7] flex-shrink-0 mt-1' />
                                     <div>
                                         <p className='text-xs text-gray-500 uppercase font-semibold'>Salary Range</p>
-                                        <p className='text-gray-900 font-medium'>₹{singleJob?.salary} LPA</p>
+                                        <p className='text-gray-900 font-medium'>₹{salaryLabel}</p>
                                     </div>
                                 </div>
 
@@ -227,7 +220,6 @@ const JobDescription = () => {
                             </div>
                         </div>
 
-                        {/* CTA Card */}
                         <div className='bg-gradient-to-br from-[#7209b7] to-[#5f32ad] rounded-xl shadow-md p-6 text-white'>
                             <h3 className='text-lg font-bold mb-2'>Ready to Apply?</h3>
                             <p className='text-sm text-purple-100 mb-4'>

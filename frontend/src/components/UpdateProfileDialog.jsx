@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from './ui/dialog'
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from './ui/dialog'
 import { Label } from './ui/label'
 import { Input } from './ui/input'
 import { Button } from './ui/button'
@@ -64,7 +64,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
             }
         } catch (error) {
             console.log(error);
-            toast.error(error.response.data.message);
+            toast.error(error.response?.data?.message || "Profile update failed");
         } finally{
             setLoading(false);
         }
@@ -77,14 +77,17 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
     return (
         <div>
             <Dialog open={open}>
-                <DialogContent className="sm:max-w-[425px]" onInteractOutside={() => setOpen(false)}>
+                <DialogContent className="sm:max-w-2xl" onInteractOutside={() => setOpen(false)}>
                     <DialogHeader>
                         <DialogTitle>Update Profile</DialogTitle>
+                        <DialogDescription>
+                            Add your resume, skills, and qualifications so recruiters can review your profile.
+                        </DialogDescription>
                     </DialogHeader>
                     <form onSubmit={submitHandler}>
-                        <div className='grid gap-4 py-4'>
+                        <div className='grid gap-4 py-4 md:grid-cols-2'>
                             <div className='grid grid-cols-4 items-center gap-4'>
-                                <Label htmlFor="name" className="text-right">Name</Label>
+                                <Label htmlFor="name" className="text-right md:col-span-1">Name</Label>
                                 <Input
                                     id="name"
                                     name="fullname"
@@ -95,7 +98,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
                                 />
                             </div>
                             <div className='grid grid-cols-4 items-center gap-4'>
-                                <Label htmlFor="email" className="text-right">Email</Label>
+                                <Label htmlFor="email" className="text-right md:col-span-1">Email</Label>
                                 <Input
                                     id="email"
                                     name="email"
@@ -106,7 +109,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
                                 />
                             </div>
                             <div className='grid grid-cols-4 items-center gap-4'>
-                                <Label htmlFor="number" className="text-right">Number</Label>
+                                <Label htmlFor="number" className="text-right md:col-span-1">Number</Label>
                                 <Input
                                     id="number"
                                     name="phoneNumber"
@@ -116,7 +119,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
                                 />
                             </div>
                             <div className='grid grid-cols-4 items-center gap-4'>
-                                <Label htmlFor="bio" className="text-right">Bio</Label>
+                                <Label htmlFor="bio" className="text-right md:col-span-1">Bio</Label>
                                 <Input
                                     id="bio"
                                     name="bio"
@@ -126,7 +129,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
                                 />
                             </div>
                             <div className='grid grid-cols-4 items-center gap-4'>
-                                <Label htmlFor="skills" className="text-right">Skills</Label>
+                                <Label htmlFor="skills" className="text-right md:col-span-1">Skills</Label>
                                 <Input
                                     id="skills"
                                     name="skills"
@@ -137,7 +140,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
                                 />
                             </div>
                             <div className='grid grid-cols-4 items-start gap-4'>
-                                <Label htmlFor="qualifications" className="pt-2 text-right">Qualifications</Label>
+                                <Label htmlFor="qualifications" className="pt-2 text-right md:col-span-1">Qualifications</Label>
                                 <textarea
                                     id="qualifications"
                                     name="qualifications"
@@ -149,7 +152,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
                                 />
                             </div>
                             <div className='grid grid-cols-4 items-center gap-4'>
-                                <Label htmlFor="branch" className="text-right">Branch</Label>
+                                <Label htmlFor="branch" className="text-right md:col-span-1">Branch</Label>
                                 <Input
                                     id="branch"
                                     name="branch"
@@ -160,7 +163,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
                                 />
                             </div>
                             <div className='grid grid-cols-4 items-center gap-4'>
-                                <Label htmlFor="cgpa" className="text-right">CGPA</Label>
+                                <Label htmlFor="cgpa" className="text-right md:col-span-1">CGPA</Label>
                                 <Input
                                     id="cgpa"
                                     name="cgpa"
@@ -173,8 +176,8 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
                                     className="col-span-3"
                                 />
                             </div>
-                            <div className='grid grid-cols-4 items-center gap-4'>
-                                <Label htmlFor="file" className="text-right">Resume</Label>
+                            <div className='grid grid-cols-4 items-center gap-4 md:col-span-2'>
+                                <Label htmlFor="file" className="text-right md:col-span-1">Resume</Label>
                                 <div className='col-span-3 space-y-2'>
                                     <Input
                                         id="file"

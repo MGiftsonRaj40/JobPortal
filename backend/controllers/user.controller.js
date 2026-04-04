@@ -1,8 +1,62 @@
 import User from "../models/user.model.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import getDataUri from "../utils/datauri.js";
 import cloudinary from "../utils/cloudinary.js";
+import fs from "fs/promises";
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const resumesDir = path.join(__dirname, "..", "uploads", "resumes");
+const hasCloudinaryConfig = Boolean(
+  process.env.CLOUD_NAME && process.env.API_KEY && process.env.API_SECRET
+);
+
+const uploadResumeToCloudinary = (file) =>
+  new Promise((resolve, reject) => {
+    const stream = cloudinary.uploader.upload_stream(
+      {
+        resource_type: "auto",
+        folder: "jobportal/resumes"
+      },
+      (error, result) => {
+        if (error) {
+          reject(error);
+          return;
+        }
+        resolve(result);
+      }
+    );
+
+    stream.end(file.buffer);
+  });
+
+const sanitizeFilename = (filename) =>
+  filename.replace(/[^a-zA-Z0-9._-]/g, "_");
+
+const uploadResumeLocally = async (file, req) => {
+  await fs.mkdir(resumesDir, { recursive: true });
+
+  const safeOriginalName = sanitizeFilename(file.originalname || "resume");
+  const uniqueFilename = `${Date.now()}-${safeOriginalName}`;
+  const destination = path.join(resumesDir, uniqueFilename);
+
+  await fs.writeFile(destination, file.buffer);
+
+  return {
+    secure_url: `${req.protocol}://${req.get("host")}/uploads/resumes/${uniqueFilename}`,
+    original_filename: safeOriginalName
+  };
+};
+
+const uploadResume = async (file, req) => {
+  if (hasCloudinaryConfig) {
+    return uploadResumeToCloudinary(file);
+  }
+
+  return uploadResumeLocally(file, req);
+};
 
 // REGISTER
 export const register = async (req, res) => {
@@ -19,8 +73,7 @@ export const register = async (req, res) => {
     let cloudResponse;
 
     if (req.file) {
-      const fileUri = getDataUri(req.file);
-      cloudResponse = await cloudinary.uploader.upload(fileUri.content);
+      cloudResponse = await uploadResume(req.file, req);
     }
 
     const user = await User.findOne({ email });
@@ -174,11 +227,7 @@ export const updateProfile = async (req, res) => {
     let cloudResponse;
 
     if (file) {
-      const fileUri = getDataUri(file);
-      cloudResponse = await cloudinary.uploader.upload(fileUri.content, {
-        resource_type: "raw",
-        folder: "jobportal/resumes"
-      });
+      cloudResponse = await uploadResume(file, req);
     }
 
     const parseList = (value) =>
@@ -232,9 +281,9 @@ export const updateProfile = async (req, res) => {
     });
 
   } catch (error) {
-    console.log(error);
+    console.log("Update profile error:", error);
     return res.status(500).json({
-      message: "Server Error",
+      message: error.message || "Server Error",
       success: false
     });
   }
